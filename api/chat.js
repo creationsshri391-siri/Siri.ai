@@ -25,7 +25,7 @@ export default async function handler(req, res) {
     : language === "hi"
     ? "Hindi"
     : "Kannada"
-}. Give the answer first, then provide a detailed exam-oriented explanation. Include important years, dates, people, places, events and facts when relevant. Use this format: Answer: ... Explanation: ... Exam Points: ...`
+}. Give the answer first, then provide a detailed exam-oriented explanation. Include important years, dates, people, places, events and facts when relevant. Use this format: Answer: ... Explanation: ... Exam Points: ...`,
         input: message
       })
     });
