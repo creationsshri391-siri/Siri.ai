@@ -386,8 +386,27 @@ chatBox.innerHTML += `
 input.value = "";
 chatBox.scrollTop = chatBox.scrollHeight;
 }
+  function saveCurrentChat() {
+  const chatBox = document.getElementById("chatBox");
+
+  if (!chatBox) return;
+
+  const chats = JSON.parse(
+    localStorage.getItem("siriChats") || "[]"
+  );
+
+  chats.push({
+    id: Date.now(),
+    title: "New Chat",
+    html: chatBox.innerHTML
+  });
+
+  localStorage.setItem("siriChats", JSON.stringify(chats));
+}
   function newChat() {
   const chatBox = document.getElementById("chatBox");
+
+    saveCurrentChat();
 
   chatBox.innerHTML = `
     <div class="message ai">
