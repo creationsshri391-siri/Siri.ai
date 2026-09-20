@@ -182,7 +182,7 @@ footer{
 <div class="chat-box" id="chatBox"><div class="message ai">ನಮಸ್ಕಾರ! 👋<br>ನಾನು <b>Siri AI</b>.<br>ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಕನ್ನಡದಲ್ಲಿ ಕೇಳಿ.</div></div>
 <div class="input-area">
 <input id="userInput" placeholder="ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಇಲ್ಲಿ ಬರೆಯಿರಿ..." onkeydown="if(event.key==='Enter') sendMessage()">
-<button onclick="sendMessage()">ಕಳುಹಿಸಿ</button>
+<button onclick="startVoice()">🎤</button>
 </div></div>
 <div class="section" id="quizSection">
 <h2>📚 Kannada GK Quiz</h2><br><p><b>ಭಾರತದ ಮೊದಲ ಉಪಗ್ರಹ ಯಾವುದು?</b></p>
@@ -251,6 +251,25 @@ function youtubeInfo(){alert("YouTube Title, Description ಮತ್ತು Hashtag
       </div>
     `;
   }
+}
+  function startVoice() {
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  if (!SpeechRecognition) {
+    alert("ಈ browser ನಲ್ಲಿ Voice Input support ಇಲ್ಲ.");
+    return;
+  }
+
+  const recognition = new SpeechRecognition();
+  recognition.lang = "kn-IN";
+  recognition.interimResults = false;
+  recognition.start();
+
+  recognition.onresult = function(event) {
+    const text = event.results[0][0].transcript;
+    document.getElementById("userInput").value = text;
+  };
 }
 </script>
 </body>
