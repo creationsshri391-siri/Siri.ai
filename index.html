@@ -272,6 +272,20 @@ function youtubeInfo(){alert("YouTube Title, Description ಮತ್ತು Hashtag
     document.getElementById("userInput").value = text;
   };
 }
+  function searchWeb() {
+  const input = document.getElementById("userInput");
+  const query = input.value.trim();
+
+  if (!query) {
+    alert("ದಯವಿಟ್ಟು ಮೊದಲು ಪ್ರಶ್ನೆ ಬರೆಯಿರಿ.");
+    return;
+  }
+
+  window.open(
+    "https://www.google.com/search?q=" + encodeURIComponent(query),
+    "_blank"
+  );
+}
 </script>
 </body>
 </html>
