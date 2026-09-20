@@ -301,7 +301,7 @@ lastAIMessage.appendChild(voiceButton);
 }
   window.addEventListener("load", () => {
   const chatBox = document.getElementById("chatBox");
-  const savedChat = localStorage.getItem("sirichatHistory");
+  const savedChat = localStorage.getItem("siriChatHistory");
 
   if (savedChat && chatBox) {
     chatBox.innerHTML = savedChat;
