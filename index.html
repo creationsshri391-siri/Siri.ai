@@ -328,7 +328,7 @@ function showChatHistory() {
     historyHTML += `
       <button onclick="loadSavedChat(${index})"
         style="display:block;width:100%;margin:8px 0;padding:10px;border:0;border-radius:8px;cursor:pointer;">
-        💬 Chat ${index + 1}
+        💬 ${chat.title || "New Chat"}
       </button>
     `;
   });
