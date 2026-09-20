@@ -43,7 +43,7 @@ let imageUrl = null;
 
 try {
   const imageSearch = await fetch(
-    `https://en.wikipedia.org/w/rest.php/v1/search/page?q=${encodeURIComponent(answer)}&limit=3`
+    `https://en.wikipedia.org/w/rest.php/v1/search/page?q=${encodeURIComponent(message)}&limit=3`
   );
 
   const imageData = await imageSearch.json();
