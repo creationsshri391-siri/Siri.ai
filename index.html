@@ -420,13 +420,17 @@ chatBox.scrollTop = chatBox.scrollHeight;
 
   if (!chatBox) return;
 
+  const firstUserMessage = chatBox.querySelector(".message.user");
+
+  if (!firstUserMessage) return;
+
   const chats = JSON.parse(
     localStorage.getItem("siriChats") || "[]"
   );
 
   chats.push({
     id: Date.now(),
-    title: chatBox.querySelector(".message.user")?.textContent?.slice(0, 40) || "New Chat",
+    title: firstUserMessage.textContent.trim().slice(0, 60),
     html: chatBox.innerHTML
   });
 
