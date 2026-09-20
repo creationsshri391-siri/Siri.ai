@@ -310,12 +310,41 @@ lastAIMessage.appendChild(voiceButton);
   }
 });
 function showChatHistory() {
-  const savedChat = localStorage.getItem("siriChatHistory");
+  const chats = JSON.parse(
+    localStorage.getItem("siriChats") || "[]"
+  );
 
-  if (savedChat) {
-    document.getElementById("chatBox").innerHTML = savedChat;
-  } else {
+  if (chats.length === 0) {
     alert("📜 ಯಾವುದೇ Chat History ಇಲ್ಲ.");
+    return;
+  }
+
+  let historyHTML = `
+    <div class="message ai">
+      <b>📜 Chat History</b><br><br>
+  `;
+
+  chats.forEach((chat, index) => {
+    historyHTML += `
+      <button onclick="loadSavedChat(${index})"
+        style="display:block;width:100%;margin:8px 0;padding:10px;border:0;border-radius:8px;cursor:pointer;">
+        💬 Chat ${index + 1}
+      </button>
+    `;
+  });
+
+  historyHTML += `</div>`;
+
+  document.getElementById("chatBox").innerHTML = historyHTML;
+}
+
+function loadSavedChat(index) {
+  const chats = JSON.parse(
+    localStorage.getItem("siriChats") || "[]"
+  );
+
+  if (chats[index]) {
+    document.getElementById("chatBox").innerHTML = chats[index].html;
   }
 }
 
