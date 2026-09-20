@@ -223,10 +223,22 @@ async function sendMessage(){
     const aiMessages = chatBox.querySelectorAll(".message.ai");
     const lastAIMessage = aiMessages[aiMessages.length - 1];
 
-    if (response.ok) {
-      lastAIMessage.innerHTML = "✅ " + data.answer
-  .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-  .replace(/\n/g, "<br>");
+   if (response.ok) {
+  lastAIMessage.innerHTML =
+    "✅ " + data.answer
+      .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+      .replace(/\n/g, "<br>");
+
+  if (data.imageUrl) {
+    const image = document.createElement("img");
+    image.src = data.imageUrl;
+    image.alt = "Related image";
+    image.style.maxWidth = "100%";
+    image.style.borderRadius = "12px";
+    image.style.marginTop = "12px";
+
+    lastAIMessage.appendChild(image);
+  }
     } else {
       lastAIMessage.textContent =
         "❌ " + (data.error || "ದೋಷ ಸಂಭವಿಸಿದೆ.");
