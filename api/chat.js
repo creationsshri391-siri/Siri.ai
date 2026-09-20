@@ -43,17 +43,15 @@ let imageUrl = null;
 
 try {
   const imageSearch = await fetch(
-    `https://en.wikipedia.org/w/rest.php/v1/search/page?q=${encodeURIComponent(message)}&limit=3`
+    `https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(message)}&gsrlimit=3&prop=pageimages&piprop=thumbnail&pithumbsize=800&format=json&formatversion=2`
   );
 
   const imageData = await imageSearch.json();
 
-  imageUrl =
-    imageData.pages?.find(page => page.thumbnail?.url)?.thumbnail?.url || null;
+  const pages = imageData.query?.pages || [];
 
-  if (imageUrl && imageUrl.startsWith("//")) {
-    imageUrl = "https:" + imageUrl;
-  }
+  imageUrl =
+    pages.find(page => page.thumbnail?.source)?.thumbnail?.source || null;
 } catch (error) {
   console.error("IMAGE SEARCH ERROR:", error);
   imageUrl = null;
