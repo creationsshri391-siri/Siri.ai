@@ -426,7 +426,7 @@ chatBox.scrollTop = chatBox.scrollHeight;
 
   chats.push({
     id: Date.now(),
-    title: "New Chat",
+    title: chatBox.querySelector(".message.user")?.textContent?.slice(0, 40) || "New Chat",
     html: chatBox.innerHTML
   });
 
