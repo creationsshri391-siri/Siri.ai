@@ -313,11 +313,21 @@ lastAIMessage.appendChild(voiceButton);
   }
 });
 function showChatHistory() {
+  const historyBox = document.getElementById("historyBox");
+
+  if (!historyBox) return;
+
+  if (historyBox.style.display === "block") {
+    historyBox.style.display = "none";
+    return;
+  }
+
   const chats = JSON.parse(
     localStorage.getItem("siriChats") || "[]"
   );
 
   if (chats.length === 0) {
+    historyBox.style.display = "none";
     alert("📜 ಯಾವುದೇ Chat History ಇಲ್ಲ.");
     return;
   }
@@ -338,7 +348,14 @@ function showChatHistory() {
 
   historyHTML += `</div>`;
 
-  document.getElementById("historyBox").innerHTML = historyHTML;
+  historyBox.innerHTML = historyHTML;
+  historyBox.style.display = "block";
+}
+  function hideChatHistory() {
+  const historyBox = document.getElementById("historyBox");
+  if (historyBox) {
+    historyBox.style.display = "none";
+  }
 }
 
 function loadSavedChat(index) {
