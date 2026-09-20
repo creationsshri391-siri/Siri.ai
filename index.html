@@ -282,10 +282,21 @@ function youtubeInfo(){alert("YouTube Title, Description ಮತ್ತು Hashtag
     return;
   }
 
-  window.open(
-    "https://www.google.com/search?q=" + encodeURIComponent(query),
-    "_blank"
-  );
+ const chatBox = document.getElementById("chatBox");
+
+chatBox.innerHTML += `
+  <div class="message user">${query}</div>
+  <div class="message ai">
+    🔎 <b>Search:</b> "${query}"<br>
+    <a href="https://www.google.com/search?q=${encodeURIComponent(query)}"
+       target="_blank">
+       Googleನಲ್ಲಿ ಫಲಿತಾಂಶಗಳನ್ನು ನೋಡಿ →
+    </a>
+  </div>
+`;
+
+input.value = "";
+chatBox.scrollTop = chatBox.scrollHeight;
 }
 </script>
 </body>
