@@ -47,25 +47,26 @@ export default async function handler(req, res) {
 
 let imageUrl = null;
 
-try {
-  const imageSearch = await fetch(
-    `https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(message)}&gsrlimit=3&prop=pageimages&piprop=thumbnail&pithumbsize=800&format=json&formatversion=2`
-  );
+const imageRequest =
+  /image|photo|picture|ಚಿತ್ರ|ಫೋಟೋ|ಚಿತ್ರ ತೋರಿಸಿ/i.test(message);
 
-  const imageData = await imageSearch.json();
+if (imageRequest) {
+  try {
+    const imageSearch = await fetch(
+      `https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(message)}&gsrlimit=3&prop=pageimages&piprop=thumbnail&pithumbsize=800&format=json&formatversion=2`
+    );
 
-  const pages = imageData.query?.pages || [];
+    const imageData = await imageSearch.json();
 
-  imageUrl =
-    pages.find(page => page.thumbnail?.source)?.thumbnail?.source || null;
-} catch (error) {
-  console.error("IMAGE SEARCH ERROR:", error);
-  imageUrl = null;
-}
+    const pages = imageData.query?.pages || [];
 
-console.log("IMAGE URL:", imageUrl);
-
-    return res.status(200).json({ answer, imageUrl });
+    imageUrl =
+      pages.find(page => page.thumbnail?.source)?.thumbnail?.source || null;
+  } catch (error) {
+    console.error("IMAGE SEARCH ERROR:", error);
+    imageUrl = null;
+  }
+}    return res.status(200).json({ answer, imageUrl });
   } catch (error) {
     return res.status(500).json({
       error: "Server error"
