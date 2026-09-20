@@ -259,7 +259,8 @@ voiceButton.style.cursor = "pointer";
 voiceButton.onclick = () => {
   speechSynthesis.cancel();
   const speech = new SpeechSynthesisUtterance(data.answer);
-  speech.lang = "kn-IN";
+  speech.lang =
+  language === "en" ? "en-IN" : language === "hi" ? "hi-IN" : "kn-IN";
   speech.rate = 0.9;
   speechSynthesis.speak(speech);
 };
