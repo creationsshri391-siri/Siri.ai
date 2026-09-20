@@ -299,6 +299,19 @@ chatBox.innerHTML += `
 input.value = "";
 chatBox.scrollTop = chatBox.scrollHeight;
 }
+  function newChat() {
+  const chatBox = document.getElementById("chatBox");
+
+  chatBox.innerHTML = `
+    <div class="message ai">
+      ನಮಸ್ಕಾರ! 👋<br>
+      ನಾನು <b>Siri AI</b>.<br>
+      ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಕನ್ನಡದಲ್ಲಿ ಕೇಳಿ.
+    </div>
+  `;
+
+  document.getElementById("userInput").value = "";
+}
 </script>
 </body>
 </html>
