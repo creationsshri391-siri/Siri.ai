@@ -33,13 +33,27 @@ export default async function handler(req, res) {
     }
 
     const answer =
-      data.output
-        ?.flatMap(item => item.content || [])
-        ?.filter(item => item.type === "output_text")
-        ?.map(item => item.text)
-        ?.join("") || "No response received.";
+  data.output
+    ?.flatMap(item => item.content || [])
+    ?.filter(item => item.type === "output_text")
+    ?.map(item => item.text)
+    ?.join("") || "No response received.";
 
-    return res.status(200).json({ answer });
+let imageUrl = null;
+
+try {
+  const imageSearch = await fetch(
+    `https://en.wikipedia.org/w/rest.php/v1/search/page?q=${encodeURIComponent(message)}&limit=1`
+  );
+
+  const imageData = await imageSearch.json();
+
+  imageUrl = imageData.pages?.[0]?.thumbnail?.url || null;
+} catch (error) {
+  imageUrl = null;
+}
+
+    return res.status(200).json({ answer, imageUrl });
   } catch (error) {
     return res.status(500).json({
       error: "Server error"
