@@ -180,6 +180,11 @@ footer{
 </div></div>
 <div class="section" id="chatSection">
 <h2>🤖 Siri AI Chat</h2>
+  <select id="languageSelect">
+  <option value="kn">ಕನ್ನಡ</option>
+  <option value="en">English</option>
+  <option value="hi">हिंदी</option>
+</select>
 <div class="chat-box" id="chatBox"><div class="message ai">ನಮಸ್ಕಾರ! 👋<br>ನಾನು <b>Siri AI</b>.<br>ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಕನ್ನಡದಲ್ಲಿ ಕೇಳಿ.</div></div>
 <div class="input-area">
 <input id="userInput" placeholder="ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಇಲ್ಲಿ ಬರೆಯಿರಿ..." onkeydown="if(event.key==='Enter') sendMessage()">
@@ -200,6 +205,7 @@ async function sendMessage(){
   const input = document.getElementById("userInput");
   const chatBox = document.getElementById("chatBox");
   const message = input.value.trim();
+  const language = document.getElementById("languageSelect").value;
 
   if (!message) return;
 
@@ -215,7 +221,9 @@ async function sendMessage(){
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ message: message })
+     body: JSON.stringify({
+  message: message,
+  language: language
     });
 
     const data = await response.json();
@@ -239,6 +247,23 @@ async function sendMessage(){
 
     lastAIMessage.appendChild(image);
   }
+     const voiceButton = document.createElement("button");
+voiceButton.textContent = "🔊 ಕೇಳಿ";
+voiceButton.style.marginTop = "10px";
+voiceButton.style.padding = "8px 14px";
+voiceButton.style.borderRadius = "8px";
+voiceButton.style.border = "none";
+voiceButton.style.cursor = "pointer";
+
+voiceButton.onclick = () => {
+  speechSynthesis.cancel();
+  const speech = new SpeechSynthesisUtterance(data.answer);
+  speech.lang = "kn-IN";
+  speech.rate = 0.9;
+  speechSynthesis.speak(speech);
+};
+
+lastAIMessage.appendChild(voiceButton);
     } else {
       lastAIMessage.textContent =
         "❌ " + (data.error || "ದೋಷ ಸಂಭವಿಸಿದೆ.");
