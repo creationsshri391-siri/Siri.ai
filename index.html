@@ -178,6 +178,7 @@ footer{
 <button onclick="youtubeInfo()">🎬 YouTube Content</button>
 <button onclick="newChat()">🆕 New Chat</button>
 <button onclick="showChatHistory()">📜 Chat History</button>
+<button onclick="clearChatHistory()">🗑️ Clear History</button>
 </div></div>
 <div class="section" id="chatSection">
 <h2>🤖 Siri AI Chat</h2>
@@ -308,7 +309,7 @@ lastAIMessage.appendChild(voiceButton);
     chatBox.innerHTML = savedChat;
   }
 });
-  function showChatHistory() {
+function showChatHistory() {
   const savedChat = localStorage.getItem("siriChatHistory");
 
   if (savedChat) {
@@ -316,6 +317,13 @@ lastAIMessage.appendChild(voiceButton);
   } else {
     alert("📜 ಯಾವುದೇ Chat History ಇಲ್ಲ.");
   }
+}
+
+function clearChatHistory() {
+  localStorage.removeItem("siriChatHistory");
+  document.getElementById("chatBox").innerHTML =
+    '<div class="message ai">👋 ನಮಸ್ಕಾರ! ನಾನು Siri AI.</div>';
+  alert("🗑️ Chat History cleared.");
 }
 function checkAnswer(a){const r=document.getElementById("result");if(a==="B"){r.innerHTML="✅ ಸರಿಯಾದ ಉತ್ತರ: ಆರ್ಯಭಟ";r.style.color="green"}else{r.innerHTML="❌ ತಪ್ಪು ಉತ್ತರ. ಸರಿಯಾದ ಉತ್ತರ: ಆರ್ಯಭಟ";r.style.color="red"}}
 function showChat(){document.getElementById("chatSection").scrollIntoView({behavior:"smooth"})}
