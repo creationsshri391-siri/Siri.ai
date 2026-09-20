@@ -5,21 +5,165 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Siri AI</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
-body{background:#f4f7fb;color:#222}
-header{background:#111827;color:white;padding:22px;text-align:center}
-.logo{font-size:32px;font-weight:bold}.tagline{margin-top:8px;color:#d1d5db}
-.container{max-width:900px;margin:auto;padding:20px}
-.hero,.section{background:white;border-radius:18px;box-shadow:0 5px 20px rgba(0,0,0,.07)}
-.hero{margin-top:20px;padding:30px 20px;text-align:center}.hero h2{font-size:27px;margin-bottom:10px}
-.buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;margin-top:25px}
-button{border:0;border-radius:12px;padding:15px;font-size:16px;cursor:pointer;background:#2563eb;color:white}
-.section{margin-top:20px;padding:20px}.chat-box{height:280px;overflow-y:auto;border:1px solid #ddd;border-radius:12px;padding:15px;margin:15px 0;background:#fafafa}
-.message{margin-bottom:12px;padding:10px;border-radius:10px}.user{background:#dbeafe;text-align:right}.ai{background:#e5e7eb}
-.input-area{display:flex;gap:8px}input{flex:1;padding:14px;border:1px solid #ccc;border-radius:10px;font-size:16px}
-.option{display:block;width:100%;margin:10px 0;background:#facc15;color:#111;text-align:left}
-#result{margin-top:15px;font-weight:bold}footer{text-align:center;padding:25px;color:#666}
-@media(max-width:600px){.buttons{grid-template-columns:1fr}}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#f5f7fb;
+  color:#202124;
+}
+
+header{
+  background:linear-gradient(135deg,#2563eb,#4f46e5);
+  color:white;
+  padding:24px;
+  text-align:center;
+}
+
+.logo{
+  font-size:34px;
+  font-weight:bold;
+}
+
+.tagline{
+  margin-top:8px;
+  font-size:15px;
+  opacity:.9;
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:20px;
+}
+
+.hero{
+  background:white;
+  padding:30px 20px;
+  border-radius:20px;
+  box-shadow:0 5px 20px rgba(0,0,0,.08);
+  text-align:center;
+}
+
+.hero h2{
+  font-size:27px;
+  margin-bottom:10px;
+}
+
+.buttons{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+  margin-top:25px;
+}
+
+button{
+  border:0;
+  border-radius:12px;
+  padding:15px;
+  font-size:16px;
+  cursor:pointer;
+  background:#2563eb;
+  color:white;
+  transition:.2s;
+}
+
+button:hover{
+  transform:translateY(-2px);
+  background:#1d4ed8;
+}
+
+.section{
+  margin-top:20px;
+  padding:20px;
+  background:white;
+  border-radius:20px;
+  box-shadow:0 5px 20px rgba(0,0,0,.06);
+}
+
+.chat-box{
+  height:330px;
+  overflow-y:auto;
+  border:1px solid #ddd;
+  border-radius:15px;
+  padding:15px;
+  margin:15px 0;
+  background:#f8fafc;
+}
+
+.message{
+  margin-bottom:12px;
+  padding:12px;
+  border-radius:12px;
+  line-height:1.5;
+}
+
+.user{
+  background:#dbeafe;
+  text-align:right;
+}
+
+.ai{
+  background:#e8eaf0;
+  text-align:left;
+}
+
+.input-area{
+  display:flex;
+  gap:8px;
+}
+
+input{
+  flex:1;
+  padding:14px;
+  border:1px solid #ccc;
+  border-radius:12px;
+  font-size:16px;
+  outline:none;
+}
+
+input:focus{
+  border-color:#2563eb;
+}
+
+.option{
+  display:block;
+  width:100%;
+  margin:10px 0;
+  background:#facc15;
+  color:#111;
+  text-align:left;
+}
+
+#result{
+  margin-top:15px;
+  font-weight:bold;
+}
+
+footer{
+  text-align:center;
+  padding:25px;
+  color:#666;
+}
+
+@media(max-width:600px){
+  .buttons{
+    grid-template-columns:1fr;
+  }
+
+  .input-area{
+    flex-direction:column;
+  }
+
+  .logo{
+    font-size:28px;
+  }
+}
+</style>
 </style>
 </head>
 <body>
