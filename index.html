@@ -257,11 +257,25 @@ voiceButton.style.border = "none";
 voiceButton.style.cursor = "pointer";
 
 voiceButton.onclick = () => {
-  speechSynthesis.cancel();
+  if (speechSynthesis.speaking) {
+    speechSynthesis.cancel();
+    voiceButton.textContent = "🔊 ಕೇಳಿ";
+    return;
+  }
+
   const speech = new SpeechSynthesisUtterance(data.answer);
+
   speech.lang =
-  language === "en" ? "en-IN" : language === "hi" ? "hi-IN" : "kn-IN";
+    language === "en" ? "en-IN" : language === "hi" ? "hi-IN" : "kn-IN";
+
   speech.rate = 0.9;
+
+  voiceButton.textContent = "🔇 ನಿಲ್ಲಿಸಿ";
+
+  speech.onend = () => {
+    voiceButton.textContent = "🔊 ಕೇಳಿ";
+  };
+
   speechSynthesis.speak(speech);
 };
 
