@@ -241,6 +241,17 @@ function showQuiz(){document.getElementById("quizSection").scrollIntoView({behav
 function examInfo(){alert("KPSC • PSI • PDO • FDA • SDA • SSC • Railway ಪರೀಕ್ಷೆಗಳಿಗೆ ಉಪಯುಕ್ತ ಪ್ರಶ್ನೆಗಳನ್ನು ಇಲ್ಲಿ ಸೇರಿಸಬಹುದು.")}
 function youtubeInfo(){alert("YouTube Title, Description ಮತ್ತು Hashtag Generator ಅನ್ನು Siri AIಗೆ ಸೇರಿಸಬಹುದು.")}
 
+  function newChat(){
+  const chatBox = document.getElementById("chatBox");
+  if(chatBox){
+    chatBox.innerHTML = `
+      <div class="message ai">
+        ನಮಸ್ಕಾರ! 👋<br>
+        ನಾನು Siri AI. ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಕನ್ನಡದಲ್ಲಿ ಕೇಳಿ.
+      </div>
+    `;
+  }
+}
 </script>
 </body>
 </html>
