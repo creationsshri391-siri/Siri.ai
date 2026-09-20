@@ -55,8 +55,11 @@ try {
     imageUrl = "https:" + imageUrl;
   }
 } catch (error) {
+  console.error("IMAGE SEARCH ERROR:", error);
   imageUrl = null;
 }
+
+console.log("IMAGE URL:", imageUrl);
 
     return res.status(200).json({ answer, imageUrl });
   } catch (error) {
