@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="kn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Siri AI</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:#f4f7fb;color:#222}
+header{background:#111827;color:white;padding:22px;text-align:center}
+.logo{font-size:32px;font-weight:bold}.tagline{margin-top:8px;color:#d1d5db}
+.container{max-width:900px;margin:auto;padding:20px}
+.hero,.section{background:white;border-radius:18px;box-shadow:0 5px 20px rgba(0,0,0,.07)}
+.hero{margin-top:20px;padding:30px 20px;text-align:center}.hero h2{font-size:27px;margin-bottom:10px}
+.buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;margin-top:25px}
+button{border:0;border-radius:12px;padding:15px;font-size:16px;cursor:pointer;background:#2563eb;color:white}
+.section{margin-top:20px;padding:20px}.chat-box{height:280px;overflow-y:auto;border:1px solid #ddd;border-radius:12px;padding:15px;margin:15px 0;background:#fafafa}
+.message{margin-bottom:12px;padding:10px;border-radius:10px}.user{background:#dbeafe;text-align:right}.ai{background:#e5e7eb}
+.input-area{display:flex;gap:8px}input{flex:1;padding:14px;border:1px solid #ccc;border-radius:10px;font-size:16px}
+.option{display:block;width:100%;margin:10px 0;background:#facc15;color:#111;text-align:left}
+#result{margin-top:15px;font-weight:bold}footer{text-align:center;padding:25px;color:#666}
+@media(max-width:600px){.buttons{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="logo">🤖 Siri AI</div><div class="tagline">ಕನ್ನಡದಲ್ಲಿ ಕಲಿಯಿರಿ • ಪ್ರಶ್ನಿಸಿ • ಪರೀಕ್ಷಿಸಿ</div></header>
+<div class="container">
+<div class="hero">
+<h2>Welcome to Siri AI</h2><p>Your Kannada AI Learning Assistant</p>
+<div class="buttons">
+<button onclick="showChat()">🤖 Siri AI Chat</button>
+<button onclick="showQuiz()">📚 Kannada GK Quiz</button>
+<button onclick="examInfo()">🎯 Government Exam</button>
+<button onclick="youtubeInfo()">🎬 YouTube Content</button>
+</div></div>
+<div class="section" id="chatSection">
+<h2>🤖 Siri AI Chat</h2>
+<div class="chat-box" id="chatBox"><div class="message ai">ನಮಸ್ಕಾರ! 👋<br>ನಾನು <b>Siri AI</b>.<br>ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಕನ್ನಡದಲ್ಲಿ ಕೇಳಿ.</div></div>
+<div class="input-area">
+<input id="userInput" placeholder="ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಇಲ್ಲಿ ಬರೆಯಿರಿ..." onkeydown="if(event.key==='Enter') sendMessage()">
+<button onclick="sendMessage()">ಕಳುಹಿಸಿ</button>
+</div></div>
+<div class="section" id="quizSection">
+<h2>📚 Kannada GK Quiz</h2><br><p><b>ಭಾರತದ ಮೊದಲ ಉಪಗ್ರಹ ಯಾವುದು?</b></p>
+<button class="option" onclick="checkAnswer('A')">A. ಭಾಸ್ಕರ</button>
+<button class="option" onclick="checkAnswer('B')">B. ಆರ್ಯಭಟ</button>
+<button class="option" onclick="checkAnswer('C')">C. ರೋಹಿಣಿ</button>
+<button class="option" onclick="checkAnswer('D')">D. INSAT-1A</button>
+<div id="result"></div></div></div>
+<footer>© 2026 Siri AI</footer>
+<script>
+function sendMessage(){const i=document.getElementById("userInput"),c=document.getElementById("chatBox"),q=i.value.trim();if(!q)return;c.innerHTML+=`<div class="message user">${q}</div>`;c.innerHTML+=`<div class="message ai">Siri AI ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಸ್ವೀಕರಿಸಿದೆ. 🤖<br><br>ನಿಜವಾದ AI ಉತ್ತರಕ್ಕಾಗಿ ಮುಂದಿನ ಹಂತದಲ್ಲಿ AI API ಅನ್ನು ಸಂಪರ್ಕಿಸಬಹುದು.</div>`;i.value="";c.scrollTop=c.scrollHeight}
+function checkAnswer(a){const r=document.getElementById("result");if(a==="B"){r.innerHTML="✅ ಸರಿಯಾದ ಉತ್ತರ: ಆರ್ಯಭಟ";r.style.color="green"}else{r.innerHTML="❌ ತಪ್ಪು ಉತ್ತರ. ಸರಿಯಾದ ಉತ್ತರ: ಆರ್ಯಭಟ";r.style.color="red"}}
+function showChat(){document.getElementById("chatSection").scrollIntoView({behavior:"smooth"})}
+function showQuiz(){document.getElementById("quizSection").scrollIntoView({behavior:"smooth"})}
+function examInfo(){alert("KPSC • PSI • PDO • FDA • SDA • SSC • Railway ಪರೀಕ್ಷೆಗಳಿಗೆ ಉಪಯುಕ್ತ ಪ್ರಶ್ನೆಗಳನ್ನು ಇಲ್ಲಿ ಸೇರಿಸಬಹುದು.")}
+function youtubeInfo(){alert("YouTube Title, Description ಮತ್ತು Hashtag Generator ಅನ್ನು Siri AIಗೆ ಸೇರಿಸಬಹುದು.")}
+</script>
+</body>
+</html>
