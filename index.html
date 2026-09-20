@@ -215,6 +215,7 @@ async function sendMessage(){
   chatBox.innerHTML += `<div class="message ai">⏳ ಉತ್ತರ ನೀಡಲಾಗುತ್ತಿದೆ...</div>`;
   chatBox.scrollTop = chatBox.scrollHeight;
   saveChatHistory();
+  }
 
   try {
     const response = await fetch("/api/chat", {
