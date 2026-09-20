@@ -224,7 +224,7 @@ async function sendMessage(){
     const lastAIMessage = aiMessages[aiMessages.length - 1];
 
     if (response.ok) {
-      lastAIMessage.innerHTML = data.answer
+      lastAIMessage.innerHTML = "🤖 " + data.answer
   .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
   .replace(/\n/g, "<br>");
     } else {
