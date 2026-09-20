@@ -43,12 +43,17 @@ let imageUrl = null;
 
 try {
   const imageSearch = await fetch(
-    `https://en.wikipedia.org/w/rest.php/v1/search/page?q=${encodeURIComponent(message)}&limit=1`
+    `https://en.wikipedia.org/w/rest.php/v1/search/page?q=${encodeURIComponent(answer)}&limit=3`
   );
 
   const imageData = await imageSearch.json();
 
-  imageUrl = imageData.pages?.[0]?.thumbnail?.url || null;
+  imageUrl =
+    imageData.pages?.find(page => page.thumbnail?.url)?.thumbnail?.url || null;
+
+  if (imageUrl && imageUrl.startsWith("//")) {
+    imageUrl = "https:" + imageUrl;
+  }
 } catch (error) {
   imageUrl = null;
 }
