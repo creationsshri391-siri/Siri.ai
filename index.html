@@ -177,6 +177,8 @@ footer{
 <button onclick="examInfo()">🎯 Government Exam</button>
 <button onclick="youtubeInfo()">🎬 YouTube Content</button>
 <button onclick="newChat()">🆕 New Chat</button>
+<button onclick="newChat()">🆕 New Chat</button>
+<button onclick="showChatHistory()">📜 Chat History</button>
 </div></div>
 <div class="section" id="chatSection">
 <h2>🤖 Siri AI Chat</h2>
@@ -307,6 +309,15 @@ lastAIMessage.appendChild(voiceButton);
     chatBox.innerHTML = savedChat;
   }
 });
+  function showChatHistory() {
+  const savedChat = localStorage.getItem("siriChatHistory");
+
+  if (savedChat) {
+    document.getElementById("chatBox").innerHTML = savedChat;
+  } else {
+    alert("📜 ಯಾವುದೇ Chat History ಇಲ್ಲ.");
+  }
+}
 function checkAnswer(a){const r=document.getElementById("result");if(a==="B"){r.innerHTML="✅ ಸರಿಯಾದ ಉತ್ತರ: ಆರ್ಯಭಟ";r.style.color="green"}else{r.innerHTML="❌ ತಪ್ಪು ಉತ್ತರ. ಸರಿಯಾದ ಉತ್ತರ: ಆರ್ಯಭಟ";r.style.color="red"}}
 function showChat(){document.getElementById("chatSection").scrollIntoView({behavior:"smooth"})}
 function showQuiz(){document.getElementById("quizSection").scrollIntoView({behavior:"smooth"})}
