@@ -180,6 +180,9 @@ footer{
 <button onclick="showChatHistory()">📜 Chat History</button>
 <button onclick="clearChatHistory()">🗑️ Clear History</button>
 </div></div>
+
+<div id="historyBox"></div>
+  
 <div class="section" id="chatSection">
 <h2>🤖 Siri AI Chat</h2>
   <select id="languageSelect">
@@ -335,7 +338,7 @@ function showChatHistory() {
 
   historyHTML += `</div>`;
 
-  document.getElementById("chatBox").innerHTML = historyHTML;
+  document.getElementById("historyBox").innerHTML = historyHTML;
 }
 
 function loadSavedChat(index) {
