@@ -163,11 +163,91 @@ footer{
     font-size:28px;
   }
 }
-</style>
+
+  .siri-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 28px;
+  background:linear-gradient(135deg,#07111f,#12345a,#07111f);
+  box-shadow:0 5px 25px rgba(0,0,0,.3);
+}
+
+.siri-logo{
+  width:48px;
+  height:48px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:15px;
+  font-size:28px;
+  color:white;
+  background:linear-gradient(135deg,#00c6ff,#7b2cff);
+  box-shadow:0 0 25px rgba(0,198,255,.6);
+  animation:siriPulse 2.5s infinite;
+}
+
+.siri-name{
+  font-size:24px;
+  font-weight:800;
+  color:white;
+}
+
+.siri-tagline{
+  font-size:12px;
+  color:#b9d9ff;
+}
+
+.siri-brand{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.siri-auth{
+  display:flex;
+  gap:10px;
+}
+
+.siri-auth button{
+  padding:10px 16px;
+  border:0;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.signin-btn{
+  background:#ffffff18;
+  color:white;
+}
+
+.signup-btn{
+  background:linear-gradient(135deg,#00a8ff,#7b2cff);
+  color:white;
+}
+
+@keyframes siriPulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.08)}
+}
 </style>
 </head>
 <body>
-<header><div class="logo">🤖 Siri AI</div><div class="tagline">ಕನ್ನಡದಲ್ಲಿ ಕಲಿಯಿರಿ • ಪ್ರಶ್ನಿಸಿ • ಪರೀಕ್ಷಿಸಿ</div></header>
+  <header class="siri-header">
+  <div class="siri-brand">
+    <div class="siri-logo">✦</div>
+    <div>
+      <div class="siri-name">Siri AI</div>
+      <div class="siri-tagline">ನಿಮ್ಮ Smart Learning Companion</div>
+    </div>
+  </div>
+
+  <div class="siri-auth">
+    <button class="signin-btn">🔐 Sign In</button>
+    <button class="signup-btn">✨ Sign Up</button>
+  </div>
+</header>
 <div class="container">
 <div class="hero">
 <h2>Welcome to Siri AI</h2><p>Your Kannada AI Learning Assistant</p>
