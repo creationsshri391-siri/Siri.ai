@@ -397,6 +397,11 @@ function handleImageUpload(event) {
 
     chatBox.appendChild(image);
     chatBox.scrollTop = chatBox.scrollHeight;
+    
+    document.getElementById("userInput").value =
+  "ಈ image ನಲ್ಲಿರುವ ಪ್ರಶ್ನೆಯನ್ನು ಓದಿ, ಸರಿಯಾದ ಉತ್ತರ ಮತ್ತು explanation ನೀಡಿ.";
+
+sendMessage();
   };
 
   reader.readAsDataURL(file);
