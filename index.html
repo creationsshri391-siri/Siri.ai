@@ -544,6 +544,8 @@ onAuthStateChanged(auth, (user) => {
 <footer>© 2026 Siri AI</footer>
 <script>
   let uploadedImage = null;
+  let uploadedFile = null;
+  let uploadedFileName = null;
 
 function handleImageUpload(event) {
   const file = event.target.files[0];
@@ -577,7 +579,7 @@ setTimeout(() => sendMessage(), 500);
 
   reader.readAsDataURL(file);
 }
-  function handleFileUpload(event) {
+ function handleFileUpload(event) {
   const file = event.target.files[0];
 
   if (!file) return;
@@ -585,38 +587,45 @@ setTimeout(() => sendMessage(), 500);
   const userInput = document.getElementById("userInput");
   const imagePreview = document.getElementById("imagePreview");
 
+  uploadedFileName = file.name;
+
   if (file.type.startsWith("image/")) {
     handleImageUpload(event);
     return;
   }
 
-  if (file.type === "text/plain") {
-    const reader = new FileReader();
+  const reader = new FileReader();
 
-    reader.onload = function () {
+  reader.onload = function () {
+    uploadedFile = reader.result;
+
+    if (file.type === "text/plain") {
       userInput.value = reader.result;
       userInput.focus();
-    };
+    }
 
-    reader.readAsText(file);
-    return;
-  }
+    imagePreview.innerHTML = `
+      <div style="
+        padding:10px 14px;
+        background:#f3f4f6;
+        border-radius:12px;
+        font-size:14px;
+      ">
+        ${file.type === "application/pdf" ? "PDF" : "FILE"} ${file.name}
+      </div>
+    `;
+  };
 
-  imagePreview.innerHTML = `
-    <div style="
-      padding:10px 14px;
-      background:#f3f4f6;
-      border-radius:12px;
-      font-size:14px;
-    ">
-      📄 ${file.name}
-    </div>
-  `;
+  reader.readAsDataURL(file);
 }
 async function sendMessage(){
   const input = document.getElementById("userInput");
   const chatBox = document.getElementById("chatBox");
-  const message = input.value.trim();
+  const message =
+  input.value.trim() ||
+  (uploadedFile
+    ? "ಈ document ಅನ್ನು ಓದಿ. ಅದರಲ್ಲಿರುವ ಪ್ರಶ್ನೆಗಳಿಗೆ ಸರಿಯಾದ ಉತ್ತರ ಮತ್ತು ವಿವರಣೆ ನೀಡಿ."
+    : "");
   const language = document.getElementById("languageSelect").value;
 
   if (!message) return;
@@ -635,9 +644,11 @@ async function sendMessage(){
         "Content-Type": "application/json"
       },
     body: JSON.stringify({
-  message: message,
-  language: language,
-  image: uploadedImage
+ message: message,
+language: language,
+image: uploadedImage,
+file: uploadedFile,
+fileName: uploadedFileName
 })
 });
     const data = await response.json();
