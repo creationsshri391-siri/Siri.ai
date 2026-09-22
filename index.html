@@ -349,6 +349,18 @@ onAuthStateChanged(auth, (user) => {
 </select>
 <div class="chat-box" id="chatBox"><div class="message ai">ನಮಸ್ಕಾರ! 👋<br>ನಾನು <b>Siri AI</b>.<br>ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಕನ್ನಡದಲ್ಲಿ ಕೇಳಿ.</div></div>
 <div class="input-area">
+  
+  <input
+  type="file"
+  id="imageInput"
+  accept="image/*"
+  style="display:none;"
+  onchange="handleImageUpload(event)"
+>
+
+<button onclick="document.getElementById('imageInput').click()">
+  📷 Upload Image
+</button>
 <input id="userInput" placeholder="ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಇಲ್ಲಿ ಬರೆಯಿರಿ..." onkeydown="if(event.key==='Enter') sendMessage()">
 <button onclick="startVoice()">🎤</button>
 <button onclick="searchWeb()">🔍Google</button>
