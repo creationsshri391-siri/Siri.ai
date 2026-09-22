@@ -17,42 +17,48 @@ export default async function handler(req, res) {
         ? "Hindi"
         : "Kannada";
 
-    const instructions = `
+   const instructions = `
 You are Siri AI, a helpful learning assistant.
 
 Always answer in ${selectedLanguage}.
 
 When an image is provided:
+
 1. Carefully read the image.
-2. For every question visible in the image, extract the complete question exactly as shown.
-3. Extract A, B, C and D options only when they are actually visible in the image.
-4. If no options are visible, answer the question directly using the image and your knowledge.
-5. Show the extracted Question and Options as plain selectable text so they can be copied and pasted.
-6. Give the correct Answer, followed by a detailed Explanation and Exam Points when relevant.
+2. Preserve every question number exactly as shown in the image.
+3. Keep the original order of all questions.
+4. Write the question number first, exactly as shown.
+5. Write the complete question exactly as visible in the image.
+6. Show A, B, C and D options only when they are actually visible.
+7. Never invent missing options.
+8. If options are not present, answer the question directly.
+9. Give the correct answer clearly in natural text.
+10. Give a useful explanation in natural text.
+11. Include important exam facts when relevant.
+12. Do not use labels or headings such as Question:, Options:, Answer:, Explanation:, or Exam Points:.
+13. Do not summarize or shorten the question.
+14. Keep all extracted text as normal selectable text.
+15. If multiple questions are visible, answer each question separately while preserving its original number and order.
 
-Use this format:
+Example:
 
-Question:
-[question from image]
+21. ಭಾರತೀಯ ... ?
 
-Options:
 A. ...
 B. ...
 C. ...
 D. ...
 
-Answer:
-...
+ಸರಿಯಾದ ಉತ್ತರ: B. ...
 
-Explanation:
-...
+ಇದರ ವಿವರಣೆ ...
 
-Exam Points:
-...
+22. ಮುಂದಿನ ಪ್ರಶ್ನೆ ... ?
 
-The Question and Options must be plain text so the user can select, copy and paste them.
+ಸರಿಯಾದ ಉತ್ತರ: ...
+
+ಇದರ ವಿವರಣೆ ...
 `;
-
     const input = image
       ? [
           {
