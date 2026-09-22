@@ -391,7 +391,12 @@ function handleImageUpload(event) {
 
     const image = document.createElement("img");
     image.src = uploadedImage;
-    image.style.maxWidth = "300px";
+    image.onload = function () {
+  chatBox.scrollTop = chatBox.scrollHeight;
+};
+    image.style.width = "300px";
+    image.style.maxWidth = "100%";
+    image.style.display = "block";
     image.style.borderRadius = "12px";
     image.style.margin = "10px 0";
 
