@@ -74,9 +74,8 @@ D. ...
               "ಈ document ಅನ್ನು ಓದಿ. ಅದರಲ್ಲಿರುವ ಪ್ರಶ್ನೆಗಳನ್ನು ಗುರುತಿಸಿ, ಮೂಲ ಪ್ರಶ್ನೆ ಸಂಖ್ಯೆ ಮತ್ತು ಕ್ರಮವನ್ನು ಉಳಿಸಿ, ಸರಿಯಾದ ಉತ್ತರ ಮತ್ತು ವಿವರಣೆ ನೀಡಿ."
           },
           {
-            type: "input_file",
-            file_data: file,
-            filename: fileName || "uploaded-file"
+           type: "input_file",
+           file_url: file
           }
         ]
       }
