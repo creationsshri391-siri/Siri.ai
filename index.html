@@ -435,7 +435,7 @@ async function sendMessage(){
   message: message,
   language: language,
   image: uploadedImage
-})
+});
     const data = await response.json();
 
     const aiMessages = chatBox.querySelectorAll(".message.ai");
