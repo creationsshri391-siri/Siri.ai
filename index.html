@@ -364,20 +364,104 @@ onAuthStateChanged(auth, (user) => {
     style="display:none;"
     onchange="handleImageUpload(event)"
   >
+  <input
+  type="file"
+  id="cameraInput"
+  accept="image/*"
+  capture="environment"
+  style="display:none;"
+  onchange="handleImageUpload(event)"
+>
+
+<input
+  type="file"
+  id="fileInput"
+  accept=".txt,.doc,.docx,.jpg,.jpeg,.png"
+  style="display:none;"
+>
+
+<input
+  type="file"
+  id="pdfInput"
+  accept="application/pdf"
+  style="display:none;"
+>
+
+<div class="upload-menu-wrap" style="position:relative;">
 
   <button
-    onclick="document.getElementById('imageInput').click()"
-    title="Upload Image"
-    aria-label="Upload Image"
+    type="button"
+    onclick="const m=document.getElementById('uploadMenu'); m.style.display=m.style.display==='flex'?'none':'flex';"
+    title="Add"
+    aria-label="Add"
     style="width:44px;height:44px;border:0;border-radius:14px;background:#2563eb;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer;"
   >
-    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="3" y="3" width="18" height="18" rx="4"/>
-      <circle cx="8.5" cy="8.5" r="1.5"/>
-      <path d="M21 15l-5-5L5 21"/>
-      <path d="M17 3v4M15 5h4"/>
+    <svg width="21" height="21" viewBox="0 0 24 24"
+      fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 5v14"></path>
+      <path d="M5 12h14"></path>
     </svg>
   </button>
+
+  <div
+    id="uploadMenu"
+    style="
+      display:none;
+      position:absolute;
+      bottom:52px;
+      left:0;
+      width:155px;
+      background:white;
+      border:1px solid #e5e7eb;
+      border-radius:16px;
+      padding:6px;
+      box-shadow:0 8px 25px rgba(0,0,0,.15);
+      z-index:1000;
+      flex-direction:column;
+      gap:4px;
+    "
+  >
+
+    <button
+      type="button"
+      onclick="document.getElementById('cameraInput').click(); document.getElementById('uploadMenu').style.display='none';"
+      title="Camera"
+      style="border:0;background:none;padding:11px;text-align:left;border-radius:10px;cursor:pointer;"
+    >
+      📷 Camera
+    </button>
+
+    <button
+      type="button"
+      onclick="document.getElementById('imageInput').click(); document.getElementById('uploadMenu').style.display='none';"
+      title="Photo"
+      style="border:0;background:none;padding:11px;text-align:left;border-radius:10px;cursor:pointer;"
+    >
+      🖼 Photo
+    </button>
+
+    <button
+      type="button"
+      onclick="document.getElementById('fileInput').click(); document.getElementById('uploadMenu').style.display='none';"
+      title="File"
+      style="border:0;background:none;padding:11px;text-align:left;border-radius:10px;cursor:pointer;"
+    >
+      📁 File
+    </button>
+
+    <button
+      type="button"
+      onclick="document.getElementById('pdfInput').click(); document.getElementById('uploadMenu').style.display='none';"
+      title="PDF"
+      style="border:0;background:none;padding:11px;text-align:left;border-radius:10px;cursor:pointer;"
+    >
+      📄 PDF
+    </button>
+
+  </div>
+
+</div>
 
   <input
     id="userInput"
@@ -699,7 +783,7 @@ function youtubeInfo(){alert("YouTube Title, Description ಮತ್ತು Hashtag
     chatBox.innerHTML = `
       <div class="message ai">
         ನಮಸ್ಕಾರ! 👋<br>
-        ನಾನು Siri AI. ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಕನ್ನಡದಲ್ಲಿ ಕೇಳಿ.
+        ನಾನು Siri AI. ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಕೇಳಿ.
       </div>
     `;
   }
@@ -778,7 +862,7 @@ chatBox.scrollTop = chatBox.scrollHeight;
     <div class="message ai">
       ನಮಸ್ಕಾರ! 👋<br>
       ನಾನು <b>Siri AI</b>.<br>
-      ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಕನ್ನಡದಲ್ಲಿ ಕೇಳಿ.
+      ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಕೇಳಿ.
     </div>
   `;
 
