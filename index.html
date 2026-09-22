@@ -284,9 +284,12 @@ footer{
   </div>
 
   <div class="siri-auth">
-    <button class="signin-btn" onclick="googleSignIn()">🔐 Sign In</button>
-    <button class="signup-btn" onclick="googleSignIn()">✨ Sign Up</button>
-  </div>
+  <button id="signInBtn" class="signin-btn" onclick="googleSignIn()">🔐 Sign In</button>
+  <button id="signUpBtn" class="signup-btn" onclick="googleSignIn()">✨ Sign Up</button>
+
+  <span id="userName" style="display:none;"></span>
+  <button id="logoutBtn" style="display:none;" onclick="logout()">🚪 Logout</button>
+</div>
 </header>
 <div class="container">
 <div class="hero">
