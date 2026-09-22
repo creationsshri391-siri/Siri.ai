@@ -361,6 +361,7 @@ onAuthStateChanged(auth, (user) => {
 <button onclick="document.getElementById('imageInput').click()">
   📷 Upload Image
 </button>
+  <div id="imagePreview" style="margin:10px 0;"></div>
 <input id="userInput" placeholder="ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಇಲ್ಲಿ ಬರೆಯಿರಿ..." onkeydown="if(event.key==='Enter') sendMessage()">
 <button onclick="startVoice()">🎤</button>
 <button onclick="searchWeb()">🔍Google</button>
@@ -387,21 +388,19 @@ function handleImageUpload(event) {
   reader.onload = function () {
     uploadedImage = reader.result;
 
-    const chatBox = document.getElementById("chatBox");
+    const imagePreview = document.getElementById("imagePreview");
 
-    const image = document.createElement("img");
-    image.src = uploadedImage;
-    image.onload = function () {
-  chatBox.scrollTop = chatBox.scrollHeight;
-};
-    image.style.width = "300px";
-    image.style.maxWidth = "100%";
-    image.style.display = "block";
-    image.style.borderRadius = "12px";
-    image.style.margin = "10px 0";
+imagePreview.innerHTML = "";
 
-    chatBox.appendChild(image);
-    chatBox.scrollTop = chatBox.scrollHeight;
+const image = document.createElement("img");
+image.src = uploadedImage;
+image.style.width = "300px";
+image.style.maxWidth = "100%";
+image.style.display = "block";
+image.style.borderRadius = "12px";
+image.style.margin = "10px 0";
+
+imagePreview.appendChild(image);
     
     document.getElementById("userInput").value =
   "ಈ image ನಲ್ಲಿರುವ ಪ್ರಶ್ನೆಯನ್ನು ಓದಿ, ಸರಿಯಾದ ಉತ್ತರ ಮತ್ತು explanation ನೀಡಿ.";
