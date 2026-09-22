@@ -378,6 +378,7 @@ onAuthStateChanged(auth, (user) => {
   id="fileInput"
   accept=".txt,.doc,.docx,.jpg,.jpeg,.png"
   style="display:none;"
+  onchange="handleFileUpload(event)"
 >
 
 <input
@@ -575,6 +576,42 @@ setTimeout(() => sendMessage(), 500);
   };
 
   reader.readAsDataURL(file);
+}
+  function handleFileUpload(event) {
+  const file = event.target.files[0];
+
+  if (!file) return;
+
+  const userInput = document.getElementById("userInput");
+  const imagePreview = document.getElementById("imagePreview");
+
+  if (file.type.startsWith("image/")) {
+    handleImageUpload(event);
+    return;
+  }
+
+  if (file.type === "text/plain") {
+    const reader = new FileReader();
+
+    reader.onload = function () {
+      userInput.value = reader.result;
+      userInput.focus();
+    };
+
+    reader.readAsText(file);
+    return;
+  }
+
+  imagePreview.innerHTML = `
+    <div style="
+      padding:10px 14px;
+      background:#f3f4f6;
+      border-radius:12px;
+      font-size:14px;
+    ">
+      📄 ${file.name}
+    </div>
+  `;
 }
 async function sendMessage(){
   const input = document.getElementById("userInput");
