@@ -4,7 +4,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { message, language } = req.body || {};
+    const { message, language, image } = req.body || {};
 
     if (!message || typeof message !== "string") {
       return res.status(400).json({ error: "Message is required" });
@@ -26,9 +26,25 @@ export default async function handler(req, res) {
     ? "Hindi"
     : "Kannada"
 }. Give the answer first, then provide a detailed exam-oriented explanation. Include important years, dates, people, places, events and facts when relevant. Use this format: Answer: ... Explanation: ... Exam Points: ...`,
-        input: message
-      })
-    });
+        input: image
+  ? [
+      {
+        role: "user",
+        content: [
+          {
+            type: "input_text",
+            text:
+              message ||
+              "ಈ image ಅನ್ನು ಓದಿ. ಅದರಲ್ಲಿರುವ ಪ್ರಶ್ನೆಗೆ ಸರಿಯಾದ ಉತ್ತರ ಮತ್ತು explanation ನೀಡಿ."
+          },
+          {
+            type: "input_image",
+            image_url: image
+          }
+        ]
+      }
+    ]
+  : message
 
     const data = await response.json();
 
