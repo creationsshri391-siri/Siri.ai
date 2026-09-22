@@ -422,12 +422,11 @@ async function sendMessage(){
       headers: {
         "Content-Type": "application/json"
       },
-     body: JSON.stringify({
+    body: JSON.stringify({
   message: message,
-  language: language
-    })   
-    });
-
+  language: language,
+  image: uploadedImage
+})
     const data = await response.json();
 
     const aiMessages = chatBox.querySelectorAll(".message.ai");
