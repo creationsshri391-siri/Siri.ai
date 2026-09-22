@@ -542,6 +542,12 @@ onAuthStateChanged(auth, (user) => {
 <button class="option" onclick="checkAnswer('D')">D. INSAT-1A</button>
 <div id="result"></div></div></div>
 <footer>© 2026 Siri AI</footer>
+<script type="module">
+  import { upload } from "https://esm.run/@vercel/blob@2.6.1/client";
+
+  window.uploadToBlob = upload;
+</script>
+
 <script>
   let uploadedImage = null;
   let uploadedFile = null;
