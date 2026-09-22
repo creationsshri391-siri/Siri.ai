@@ -4,12 +4,15 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { message, language, image } = req.body || {};
+    const { message, language, image, file, fileName } = req.body || {};
 
-    if (!message || typeof message !== "string") {
-      return res.status(400).json({ error: "Message is required" });
-    }
-
+   if (
+  (!message || typeof message !== "string") &&
+  !image &&
+  !file
+) {
+  return res.status(400).json({ error: "Message, image or file is required" });
+}
     const selectedLanguage =
       language === "en"
         ? "English"
