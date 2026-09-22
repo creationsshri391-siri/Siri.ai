@@ -10,39 +10,31 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Message is required" });
     }
 
-    const response = await fetch("https://api.openai.com/v1/responses", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`
-      },
-      body: JSON.stringify({
-        model: "gpt-5.6-luna",
-        instructions:
-         `You are Siri AI, a helpful learning assistant.
+    const selectedLanguage =
+      language === "en"
+        ? "English"
+        : language === "hi"
+        ? "Hindi"
+        : "Kannada";
 
-Always answer in the selected language:
-${
-  language === "en"
-    ? "English"
-    : language === "hi"
-    ? "Hindi"
-    : "Kannada"
-}
+    const instructions = `
+You are Siri AI, a helpful learning assistant.
+
+Always answer in ${selectedLanguage}.
 
 When an image is provided:
-1. Read the image carefully.
-2. Extract the question exactly as visible in the image.
-3. Extract all answer options A, B, C and D when present.
-4. Display the extracted question and options as selectable normal text.
-5. Give the correct answer.
-6. Give a detailed explanation.
-7. Add important exam points when relevant.
+1. Carefully read the image.
+2. Extract the question exactly as visible.
+3. Extract all visible answer options such as A, B, C and D.
+4. Show the Question and Options as normal selectable text.
+5. Give the correct Answer.
+6. Give a detailed Explanation.
+7. Give Exam Points when relevant.
 
 Use this format:
 
 Question:
-[Question from image]
+[question from image]
 
 Options:
 A. ...
@@ -59,27 +51,43 @@ Explanation:
 Exam Points:
 ...
 
-The Question and Options must be plain selectable text so the user can select, copy and paste them.`
-        input: image
-  ? [
-      {
-        role: "user",
-        content: [
+The Question and Options must be plain text so the user can select, copy and paste them.
+`;
+
+    const input = image
+      ? [
           {
-            type: "input_text",
-            text:
-              message ||
-              "ಈ image ಅನ್ನು ಓದಿ. ಅದರಲ್ಲಿರುವ ಪ್ರಶ್ನೆಗೆ ಸರಿಯಾದ ಉತ್ತರ ಮತ್ತು explanation ನೀಡಿ."
-          },
-          {
-            type: "input_image",
-            image_url: image
+            role: "user",
+            content: [
+              {
+                type: "input_text",
+                text: message
+              },
+              {
+                type: "input_image",
+                image_url: image
+              }
+            ]
           }
         ]
+      : message;
+
+    const response = await fetch(
+      "https://api.openai.com/v1/responses",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`
+        },
+        body: JSON.stringify({
+          model: "gpt-5.6-luna",
+          instructions,
+          input
+        })
       }
-    ]
-  : message
-   });
+    );
+
     const data = await response.json();
 
     if (!response.ok) {
@@ -89,35 +97,19 @@ The Question and Options must be plain selectable text so the user can select, c
     }
 
     const answer =
-  data.output
-    ?.flatMap(item => item.content || [])
-    ?.filter(item => item.type === "output_text")
-    ?.map(item => item.text)
-    ?.join("") || "No response received.";
+      data.output
+        ?.flatMap(item => item.content || [])
+        ?.filter(item => item.type === "output_text")
+        ?.map(item => item.text)
+        ?.join("") || "No response received.";
 
-let imageUrl = null;
+    return res.status(200).json({
+      answer
+    });
 
-const imageRequest =
-  /image|photo|picture|ಚಿತ್ರ|ಫೋಟೋ|ಚಿತ್ರ ತೋರಿಸಿ/i.test(message);
-
-if (imageRequest) {
-  try {
-    const imageSearch = await fetch(
-      `https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(message)}&gsrlimit=3&prop=pageimages&piprop=thumbnail&pithumbsize=800&format=json&formatversion=2`
-    );
-
-    const imageData = await imageSearch.json();
-
-    const pages = imageData.query?.pages || [];
-
-    imageUrl =
-      pages.find(page => page.thumbnail?.source)?.thumbnail?.source || null;
   } catch (error) {
-    console.error("IMAGE SEARCH ERROR:", error);
-    imageUrl = null;
-  }
-}    return res.status(200).json({ answer, imageUrl });
-  } catch (error) {
+    console.error("SERVER ERROR:", error);
+
     return res.status(500).json({
       error: "Server error"
     });
