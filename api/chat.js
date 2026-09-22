@@ -24,12 +24,11 @@ Always answer in ${selectedLanguage}.
 
 When an image is provided:
 1. Carefully read the image.
-2. Extract the question exactly as visible.
-3. Extract all visible answer options such as A, B, C and D.
-4. Show the Question and Options as normal selectable text.
-5. Give the correct Answer.
-6. Give a detailed Explanation.
-7. Give Exam Points when relevant.
+2. For every question visible in the image, extract the complete question exactly as shown.
+3. Extract A, B, C and D options only when they are actually visible in the image.
+4. If no options are visible, answer the question directly using the image and your knowledge.
+5. Show the extracted Question and Options as plain selectable text so they can be copied and pasted.
+6. Give the correct Answer, followed by a detailed Explanation and Exam Points when relevant.
 
 Use this format:
 
