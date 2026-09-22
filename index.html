@@ -347,7 +347,7 @@ onAuthStateChanged(auth, (user) => {
   <option value="en">English</option>
   <option value="hi">हिंदी</option>
 </select>
-<div class="chat-box" id="chatBox"><div class="message ai">ನಮಸ್ಕಾರ! 👋<br>ನಾನು <b>Siri AI</b>.<br>ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಕನ್ನಡದಲ್ಲಿ ಕೇಳಿ.</div></div>
+<div class="chat-box" id="chatBox"><div class="message ai">ನಮಸ್ಕಾರ! 👋<br>ನಾನು <b>Siri AI</b>.<br>ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಕೇಳಿ.</div></div>
 <div id="imagePreview" style="margin:10px 0;"></div>
 <div class="input-area" style="display:flex;align-items:center;gap:8px;">
 
@@ -375,7 +375,7 @@ onAuthStateChanged(auth, (user) => {
 
   <input
     id="userInput"
-    placeholder="ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಇಲ್ಲಿ ಬರೆಯಿರಿ..."
+    placeholder="ಇಲ್ಲಿ ಬರೆಯಿರಿ..."
     onkeydown="if(event.key==='Enter') sendMessage()"
     style="flex:1;"
   >
@@ -499,43 +499,57 @@ async function sendMessage(){
     "✅ " + data.answer
       .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
       .replace(/\n/g, "<br>");
-     const questionMatch = data.answer.match(
-  /Question:\s*([\s\S]*?)(?=\nOptions:|\nAnswer:|$)/i
-);
+    const copyBtn = document.createElement("button");
 
-const answerMatch = data.answer.match(
-  /Answer:\s*([\s\S]*?)(?=\nExplanation:|\nExam Points:|$)/i
-);
+copyBtn.title = "Copy";
+copyBtn.setAttribute("aria-label", "Copy");
 
-const copyBox = document.createElement("div");
-copyBox.style.marginTop = "12px";
-copyBox.style.display = "flex";
-copyBox.style.gap = "8px";
-copyBox.style.flexWrap = "wrap";
+copyBtn.innerHTML = `
+  <svg width="18" height="18" viewBox="0 0 24 24"
+    fill="none" stroke="currentColor" stroke-width="2"
+    stroke-linecap="round" stroke-linejoin="round">
+    <rect x="9" y="9" width="11" height="11" rx="2"></rect>
+    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+  </svg>
+`;
 
-if (questionMatch && questionMatch[1].trim()) {
-  const qBtn = document.createElement("button");
-  qBtn.textContent = "📋 Copy Question";
-  qBtn.onclick = async () => {
-    await navigator.clipboard.writeText(questionMatch[1].trim());
-    qBtn.textContent = "✅ Copied";
-    setTimeout(() => qBtn.textContent = "📋 Copy Question", 1500);
-  };
-  copyBox.appendChild(qBtn);
-}
+copyBtn.style.width = "38px";
+copyBtn.style.height = "38px";
+copyBtn.style.border = "0";
+copyBtn.style.borderRadius = "11px";
+copyBtn.style.background = "#2563eb";
+copyBtn.style.color = "white";
+copyBtn.style.display = "inline-flex";
+copyBtn.style.alignItems = "center";
+copyBtn.style.justifyContent = "center";
+copyBtn.style.cursor = "pointer";
+copyBtn.style.marginTop = "10px";
 
-if (answerMatch && answerMatch[1].trim()) {
-  const aBtn = document.createElement("button");
-  aBtn.textContent = "📋 Copy Answer";
-  aBtn.onclick = async () => {
-    await navigator.clipboard.writeText(answerMatch[1].trim());
-    aBtn.textContent = "✅ Copied";
-    setTimeout(() => aBtn.textContent = "📋 Copy Answer", 1500);
-  };
-  copyBox.appendChild(aBtn);
-}
+copyBtn.onclick = async () => {
+  try {
+    await navigator.clipboard.writeText(data.answer);
 
-lastAIMessage.appendChild(copyBox);
+    copyBtn.innerHTML = "✓";
+    copyBtn.title = "Copied";
+
+    setTimeout(() => {
+      copyBtn.innerHTML = `
+        <svg width="18" height="18" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="9" width="11" height="11" rx="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+      `;
+      copyBtn.title = "Copy";
+    }, 1200);
+
+  } catch (error) {
+    console.error("Copy failed:", error);
+  }
+};
+
+lastAIMessage.appendChild(copyBtn);
 
   if (data.imageUrl) {
     const image = document.createElement("img");
@@ -548,7 +562,7 @@ lastAIMessage.appendChild(copyBox);
     lastAIMessage.appendChild(image);
   }
      const voiceButton = document.createElement("button");
-voiceButton.textContent = "🔊 ಕೇಳಿ";
+voiceButton.textContent = "🔊 ";
 voiceButton.style.marginTop = "10px";
 voiceButton.style.padding = "8px 14px";
 voiceButton.style.borderRadius = "8px";
@@ -558,7 +572,7 @@ voiceButton.style.cursor = "pointer";
 voiceButton.onclick = () => {
   if (speechSynthesis.speaking) {
     speechSynthesis.cancel();
-    voiceButton.textContent = "🔊 ಕೇಳಿ";
+    voiceButton.textContent = "🔊 ";
     return;
   }
 
@@ -569,10 +583,10 @@ voiceButton.onclick = () => {
 
   speech.rate = 0.9;
 
-  voiceButton.textContent = "🔇 ನಿಲ್ಲಿಸಿ";
+  voiceButton.textContent = "🔇 ";
 
   speech.onend = () => {
-    voiceButton.textContent = "🔊 ಕೇಳಿ";
+    voiceButton.textContent = "🔊 ";
   };
 
   speechSynthesis.speak(speech);
