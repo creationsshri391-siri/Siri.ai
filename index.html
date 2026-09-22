@@ -628,7 +628,7 @@ async function sendMessage(){
     : "");
   const language = document.getElementById("languageSelect").value;
 
-  if (!message) return;
+  if (!message && !uploadedFile && !uploadedImage) return;
 
   chatBox.innerHTML += `<div class="message user">${message}</div>`;
   input.value = "";
