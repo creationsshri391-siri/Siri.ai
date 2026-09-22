@@ -17,9 +17,12 @@ export default async function handler(request, response) {
       onBeforeGenerateToken: async (pathname) => {
         return {
           allowedContentTypes: [
-            "application/pdf",
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-          ],
+  "application/pdf",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "image/jpeg",
+  "image/png",
+  "image/webp"
+   ],
           maximumSizeInBytes: 20 * 1024 * 1024,
           addRandomSuffix: true
         };
