@@ -447,6 +447,43 @@ async function sendMessage(){
     "✅ " + data.answer
       .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
       .replace(/\n/g, "<br>");
+     const questionMatch = data.answer.match(
+  /Question:\s*([\s\S]*?)(?=\nOptions:|\nAnswer:|$)/i
+);
+
+const answerMatch = data.answer.match(
+  /Answer:\s*([\s\S]*?)(?=\nExplanation:|\nExam Points:|$)/i
+);
+
+const copyBox = document.createElement("div");
+copyBox.style.marginTop = "12px";
+copyBox.style.display = "flex";
+copyBox.style.gap = "8px";
+copyBox.style.flexWrap = "wrap";
+
+if (questionMatch && questionMatch[1].trim()) {
+  const qBtn = document.createElement("button");
+  qBtn.textContent = "📋 Copy Question";
+  qBtn.onclick = async () => {
+    await navigator.clipboard.writeText(questionMatch[1].trim());
+    qBtn.textContent = "✅ Copied";
+    setTimeout(() => qBtn.textContent = "📋 Copy Question", 1500);
+  };
+  copyBox.appendChild(qBtn);
+}
+
+if (answerMatch && answerMatch[1].trim()) {
+  const aBtn = document.createElement("button");
+  aBtn.textContent = "📋 Copy Answer";
+  aBtn.onclick = async () => {
+    await navigator.clipboard.writeText(answerMatch[1].trim());
+    aBtn.textContent = "✅ Copied";
+    setTimeout(() => aBtn.textContent = "📋 Copy Answer", 1500);
+  };
+  copyBox.appendChild(aBtn);
+}
+
+lastAIMessage.appendChild(copyBox);
 
   if (data.imageUrl) {
     const image = document.createElement("img");
