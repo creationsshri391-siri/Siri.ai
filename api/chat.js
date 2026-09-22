@@ -62,7 +62,48 @@ D. ...
 
 ಇದರ ವಿವರಣೆ ...
 `;
-   const input = file
+   let openAIFileId = null;
+
+if (file) {
+  const blobResponse = await fetch(file);
+
+  if (!blobResponse.ok) {
+    throw new Error("Uploaded file could not be downloaded from Blob.");
+  }
+
+  const arrayBuffer = await blobResponse.arrayBuffer();
+
+  const formData = new FormData();
+  formData.append("purpose", "user_data");
+  formData.append(
+    "file",
+    new Blob([arrayBuffer]),
+    fileName || "uploaded-file"
+  );
+
+  const fileUploadResponse = await fetch(
+    "https://api.openai.com/v1/files",
+    {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`
+      },
+      body: formData
+    }
+  );
+
+  const fileUploadData = await fileUploadResponse.json();
+
+  if (!fileUploadResponse.ok) {
+    throw new Error(
+      fileUploadData.error?.message || "OpenAI file upload failed."
+    );
+  }
+
+  openAIFileId = fileUploadData.id;
+}
+
+const input = openAIFileId
   ? [
       {
         role: "user",
@@ -71,11 +112,11 @@ D. ...
             type: "input_text",
             text:
               message ||
-              "ಈ document ಅನ್ನು ಓದಿ. ಅದರಲ್ಲಿರುವ ಪ್ರಶ್ನೆಗಳನ್ನು ಗುರುತಿಸಿ, ಮೂಲ ಪ್ರಶ್ನೆ ಸಂಖ್ಯೆ ಮತ್ತು ಕ್ರಮವನ್ನು ಉಳಿಸಿ, ಸರಿಯಾದ ಉತ್ತರ ಮತ್ತು ವಿವರಣೆ ನೀಡಿ."
+              "ಈ document ಅನ್ನು ಓದಿ. ಅದರಲ್ಲಿರುವ ಪ್ರಶ್ನೆಗಳಿಗೆ ಸರಿಯಾದ ಉತ್ತರ ಮತ್ತು ವಿವರಣೆ ನೀಡಿ."
           },
           {
-           type: "input_file",
-           file_url: file
+            type: "input_file",
+            file_id: openAIFileId
           }
         ]
       }
