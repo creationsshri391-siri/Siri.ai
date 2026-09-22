@@ -375,22 +375,31 @@ onAuthStateChanged(auth, (user) => {
 <div id="result"></div></div></div>
 <footer>© 2026 Siri AI</footer>
 <script>
-  function handleImageUpload(event) {
+  let uploadedImage = null;
+
+function handleImageUpload(event) {
   const file = event.target.files[0];
 
   if (!file) return;
 
-  const chatBox = document.getElementById("chatBox");
+  const reader = new FileReader();
 
-  const image = document.createElement("img");
-  image.src = URL.createObjectURL(file);
-  image.style.maxWidth = "300px";
-  image.style.borderRadius = "12px";
-  image.style.margin = "10px 0";
+  reader.onload = function () {
+    uploadedImage = reader.result;
 
-  chatBox.appendChild(image);
+    const chatBox = document.getElementById("chatBox");
 
-  chatBox.scrollTop = chatBox.scrollHeight;
+    const image = document.createElement("img");
+    image.src = uploadedImage;
+    image.style.maxWidth = "300px";
+    image.style.borderRadius = "12px";
+    image.style.margin = "10px 0";
+
+    chatBox.appendChild(image);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  };
+
+  reader.readAsDataURL(file);
 }
 async function sendMessage(){
   const input = document.getElementById("userInput");
