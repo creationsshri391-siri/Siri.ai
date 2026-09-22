@@ -348,6 +348,7 @@ onAuthStateChanged(auth, (user) => {
   <option value="hi">हिंदी</option>
 </select>
 <div class="chat-box" id="chatBox"><div class="message ai">ನಮಸ್ಕಾರ! 👋<br>ನಾನು <b>Siri AI</b>.<br>ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಕನ್ನಡದಲ್ಲಿ ಕೇಳಿ.</div></div>
+<div id="imagePreview" style="margin:10px 0;"></div>
 <div class="input-area">
   
   <input
@@ -361,7 +362,6 @@ onAuthStateChanged(auth, (user) => {
 <button onclick="document.getElementById('imageInput').click()">
   📷 Upload Image
 </button>
-  <div id="imagePreview" style="margin:10px 0;"></div>
 <input id="userInput" placeholder="ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಇಲ್ಲಿ ಬರೆಯಿರಿ..." onkeydown="if(event.key==='Enter') sendMessage()">
 <button onclick="startVoice()">🎤</button>
 <button onclick="searchWeb()">🔍Google</button>
