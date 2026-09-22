@@ -270,6 +270,38 @@ footer{
   }
 }
     window.googleSignIn = googleSignIn;
+      function logout() {
+  signOut(auth)
+    .then(() => {
+      alert("🚪 Logout ಆಯಿತು.");
+    })
+    .catch((error) => {
+      console.error(error);
+      alert("❌ Logout ವಿಫಲವಾಗಿದೆ.");
+    });
+}
+
+onAuthStateChanged(auth, (user) => {
+  const signInBtn = document.getElementById("signInBtn");
+  const signUpBtn = document.getElementById("signUpBtn");
+  const userName = document.getElementById("userName");
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  if (user) {
+    signInBtn.style.display = "none";
+    signUpBtn.style.display = "none";
+
+    userName.textContent = "👤 " + (user.displayName || user.email);
+    userName.style.display = "inline-block";
+
+    logoutBtn.style.display = "inline-block";
+  } else {
+    signInBtn.style.display = "inline-block";
+    signUpBtn.style.display = "inline-block";
+    userName.style.display = "none";
+    logoutBtn.style.display = "none";
+  }
+});
 </script>
 
 </head>
