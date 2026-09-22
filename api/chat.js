@@ -62,39 +62,44 @@ D. ...
 
 ಇದರ ವಿವರಣೆ ...
 `;
-    const input = image
-      ? [
+   const input = file
+  ? [
+      {
+        role: "user",
+        content: [
           {
-            role: "user",
-            content: [
-              {
-                type: "input_text",
-                text: message
-              },
-              {
-                type: "input_image",
-                image_url: image
-              }
-            ]
+            type: "input_text",
+            text:
+              message ||
+              "ಈ document ಅನ್ನು ಓದಿ. ಅದರಲ್ಲಿರುವ ಪ್ರಶ್ನೆಗಳನ್ನು ಗುರುತಿಸಿ, ಮೂಲ ಪ್ರಶ್ನೆ ಸಂಖ್ಯೆ ಮತ್ತು ಕ್ರಮವನ್ನು ಉಳಿಸಿ, ಸರಿಯಾದ ಉತ್ತರ ಮತ್ತು ವಿವರಣೆ ನೀಡಿ."
+          },
+          {
+            type: "input_file",
+            file_data: file,
+            filename: fileName || "uploaded-file"
           }
         ]
-      : message;
-
-    const response = await fetch(
-      "https://api.openai.com/v1/responses",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`
-        },
-        body: JSON.stringify({
-          model: "gpt-5.6-luna",
-          instructions,
-          input
-        })
       }
-    );
+    ]
+  : image
+  ? [
+      {
+        role: "user",
+        content: [
+          {
+            type: "input_text",
+            text:
+              message ||
+              "ಈ image ಅನ್ನು ಓದಿ. ಅದರಲ್ಲಿರುವ ಪ್ರಶ್ನೆಗಳಿಗೆ ಸರಿಯಾದ ಉತ್ತರ ಮತ್ತು ವಿವರಣೆ ನೀಡಿ."
+          },
+          {
+            type: "input_image",
+            image_url: image
+          }
+        ]
+      }
+    ]
+  : message;
 
     const data = await response.json();
 
