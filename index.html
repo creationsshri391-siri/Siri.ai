@@ -554,37 +554,124 @@ onAuthStateChanged(auth, (user) => {
   let uploadedFile = null;
   let uploadedFileName = null;
 
-function handleImageUpload(event) {
+async function handleImageUpload(event) {
   const file = event.target.files[0];
 
   if (!file) return;
 
-  const reader = new FileReader();
+  const imagePreview = document.getElementById("imagePreview");
 
-  reader.onload = function () {
-    uploadedImage = reader.result;
+  uploadedFile = null;
+  uploadedFileName = null;
+  uploadedImage = null;
 
-    const imagePreview = document.getElementById("imagePreview");
+  imagePreview.innerHTML = `
+    <div style="
+      padding:10px 14px;
+      background:#f3f4f6;
+      border-radius:12px;
+      font-size:14px;
+    ">
+      ⚡ Image optimizing...
+    </div>
+  `;
 
-imagePreview.innerHTML = "";
+  try {
+    const objectUrl = URL.createObjectURL(file);
 
-const image = document.createElement("img");
-image.src = uploadedImage;
-image.style.width = "300px";
-image.style.maxWidth = "100%";
-image.style.display = "block";
-image.style.borderRadius = "12px";
-image.style.margin = "10px 0";
+    const img = new Image();
 
-imagePreview.appendChild(image);
-    
-    document.getElementById("userInput").value =
-  "ಈ image ನಲ್ಲಿರುವ ಪ್ರಶ್ನೆಯನ್ನು ಓದಿ, ಸರಿಯಾದ ಉತ್ತರ ಮತ್ತು explanation ನೀಡಿ.";
+    const compressedBlob = await new Promise((resolve, reject) => {
+      img.onload = () => {
+        const maxWidth = 1600;
+        const scale = Math.min(1, maxWidth / img.width);
 
-setTimeout(() => sendMessage(), 500);
-  };
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.round(img.width * scale);
+        canvas.height = Math.round(img.height * scale);
 
-  reader.readAsDataURL(file);
+        const ctx = canvas.getContext("2d");
+
+        if (!ctx) {
+          reject(new Error("Canvas not supported"));
+          return;
+        }
+
+        ctx.drawImage(
+          img,
+          0,
+          0,
+          canvas.width,
+          canvas.height
+        );
+
+        canvas.toBlob(
+          (blob) => {
+            if (blob) {
+              resolve(blob);
+            } else {
+              reject(new Error("Image compression failed"));
+            }
+          },
+          "image/jpeg",
+          0.75
+        );
+      };
+
+      img.onerror = () => {
+        reject(new Error("Image could not be loaded"));
+      };
+
+      img.src = objectUrl;
+    });
+
+    URL.revokeObjectURL(objectUrl);
+
+    imagePreview.innerHTML = `
+      <div style="
+        padding:10px 14px;
+        background:#f3f4f6;
+        border-radius:12px;
+        font-size:14px;
+      ">
+        ⚡ Uploading image...
+      </div>
+    `;
+
+    const blob = await window.uploadToBlob(
+      "siri-image-" + Date.now() + ".jpg",
+      compressedBlob,
+      {
+        access: "public",
+        handleUploadUrl: "/api/upload"
+      }
+    );
+
+    uploadedImage = blob.url;
+
+    const previewImage = document.createElement("img");
+    previewImage.src = uploadedImage;
+    previewImage.style.maxWidth = "260px";
+    previewImage.style.borderRadius = "12px";
+    previewImage.style.display = "block";
+
+    imagePreview.innerHTML = "";
+    imagePreview.appendChild(previewImage);
+
+  } catch (error) {
+    console.error("IMAGE UPLOAD ERROR:", error);
+
+    imagePreview.innerHTML = `
+      <div style="
+        padding:10px 14px;
+        background:#fee2e2;
+        color:#991b1b;
+        border-radius:12px;
+      ">
+        ❌ Image upload failed
+      </div>
+    `;
+  }
 }
  function handleFileUpload(event) {
   const file = event.target.files[0];
