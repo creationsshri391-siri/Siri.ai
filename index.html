@@ -237,6 +237,136 @@ footer{
   -moz-user-select: text;
   cursor: text;
 }
+  /* ===== SIRI AI RESPONSIVE ===== */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.section {
+  width: 100%;
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Laptop / Desktop */
+@media (min-width: 769px) {
+  body {
+    padding: 0 20px;
+  }
+
+  .section {
+    width: 100%;
+  }
+
+  .chat-box {
+    width: 100%;
+  }
+
+  .input-area {
+    width: 100%;
+  }
+
+  .input-area input {
+    min-width: 0;
+  }
+}
+
+/* Phone */
+@media (max-width: 768px) {
+  body {
+    padding: 0 8px;
+  }
+
+  header {
+    padding: 16px 10px;
+  }
+
+  .section {
+    width: 100%;
+    max-width: 100%;
+    margin: 10px auto;
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .chat-box {
+    width: 100%;
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+
+  .input-area {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .input-area input {
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+    height: 44px;
+    font-size: 15px;
+  }
+
+  .input-area button {
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    padding: 0;
+  }
+
+  .message {
+    max-width: 94%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .option {
+    width: 100%;
+  }
+}
+
+/* Small Phone */
+@media (max-width: 420px) {
+  body {
+    padding: 0 5px;
+  }
+
+  .section {
+    padding: 10px;
+  }
+
+  .input-area {
+    gap: 5px;
+  }
+
+  .input-area input {
+    height: 42px;
+    font-size: 14px;
+  }
+
+  .input-area button {
+    width: 42px;
+    min-width: 42px;
+    height: 42px;
+  }
+}
 </style>
 
     <script type="module">
