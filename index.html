@@ -367,6 +367,68 @@ img {
     height: 42px;
   }
 }
+  /* ===== SMART SVG ICON SYSTEM ===== */
+
+.svg-ui-icon,
+.input-area svg,
+.upload-menu-wrap svg,
+button svg {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  display: inline-block;
+  vertical-align: middle;
+  transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+button:hover svg {
+  transform: scale(1.08);
+}
+
+button:active svg {
+  transform: scale(0.94);
+}
+
+/* Icon-only buttons */
+.input-area > button,
+.upload-menu-wrap > button:first-child {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Upload menu icons */
+.upload-menu-wrap button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.upload-menu-wrap button svg {
+  width: 19px;
+  height: 19px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  button svg,
+  .svg-ui-icon {
+    width: 19px;
+    height: 19px;
+    flex-basis: 19px;
+  }
+}
+
+/* Small phone */
+@media (max-width: 420px) {
+  button svg,
+  .svg-ui-icon {
+    width: 18px;
+    height: 18px;
+    flex-basis: 18px;
+  }
+}
 </style>
 
     <script type="module">
@@ -1238,6 +1300,59 @@ function convertEmojiIconsToSVG() {
 }
 
 window.addEventListener("DOMContentLoaded", convertEmojiIconsToSVG);
+</script>
+  <script>
+function makeUploadMenuSVGIcons() {
+  const icons = {
+    Camera: `
+      <svg viewBox="0 0 24 24" width="19" height="19"
+           fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 8h3l2-2h6l2 2h3a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2z"/>
+        <circle cx="12" cy="14" r="3.5"/>
+      </svg>`,
+
+    Photo: `
+      <svg viewBox="0 0 24 24" width="19" height="19"
+           fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="4" width="18" height="16" rx="2"/>
+        <circle cx="8.5" cy="9" r="1.5"/>
+        <path d="M3 17l5-5 4 4 2-2 7 6"/>
+      </svg>`,
+
+    File: `
+      <svg viewBox="0 0 24 24" width="19" height="19"
+           fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 3h8l4 4v14H6z"/>
+        <path d="M14 3v5h5"/>
+        <path d="M9 13h6M9 17h6"/>
+      </svg>`,
+
+    PDF: `
+      <svg viewBox="0 0 24 24" width="19" height="19"
+           fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 3h8l4 4v14H6z"/>
+        <path d="M14 3v5h5"/>
+        <path d="M8.5 16h2a2 2 0 0 0 0-4h-2v6"/>
+        <path d="M13 12h2M13 15h1.5"/>
+      </svg>`
+  };
+
+  document
+    .querySelectorAll(".upload-menu-wrap button[title]")
+    .forEach(button => {
+      const title = button.getAttribute("title");
+
+      if (icons[title]) {
+        button.innerHTML = icons[title] + `<span>${title}</span>`;
+      }
+    });
+}
+
+window.addEventListener("DOMContentLoaded", makeUploadMenuSVGIcons);
 </script>
 
 <style>
