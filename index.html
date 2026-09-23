@@ -1354,6 +1354,44 @@ function makeUploadMenuSVGIcons() {
 
 window.addEventListener("DOMContentLoaded", makeUploadMenuSVGIcons);
 </script>
+  /* ===== SIRI AI SMART ICON BUTTONS ===== */
+
+.input-area > button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.input-area > button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.14);
+}
+
+.input-area > button:active {
+  transform: scale(0.94);
+}
+
+.input-area > button svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .input-area > button svg {
+    width: 19px;
+    height: 19px;
+  }
+}
+
+@media (max-width: 420px) {
+  .input-area > button svg {
+    width: 18px;
+    height: 18px;
+  }
+}
 
 <style>
 .svg-ui-icon {
