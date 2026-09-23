@@ -1553,5 +1553,15 @@ window.addEventListener("DOMContentLoaded", makeUploadMenuSVGIcons);
   }
 }
 </style>
+<script>
+function toggleSiriHomePanel() {
+  const panel = document.getElementById("siriHomePanel");
+
+  if (!panel) return;
+
+  panel.style.display =
+    panel.style.display === "block" ? "none" : "block";
+}
+</script>
 </body>
 </html>
